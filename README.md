@@ -6,6 +6,19 @@ engineering and vibration analysis, diagnoses faults with expert rules **and** m
 explainable health index with a simulated remaining-useful-life (RUL) estimate, manages alarms, stores
 everything in SQLite and presents it in a six-page SCADA-style dashboard.
 
+### Screenshots (misalignment fault injected)
+
+| Equipment overview | Fault detection: rules vs ML |
+|---|---|
+| ![Overview](docs/screenshots/1_overview.jpg) | ![Fault detection](docs/screenshots/4_fault_detection.jpg) |
+| **Vibration analysis (2X peak = misalignment)** | **Predictive maintenance** |
+| ![Vibration](docs/screenshots/3_vibration.jpg) | ![Maintenance](docs/screenshots/5_predictive_maintenance.jpg) |
+
+<details><summary>Real-time monitoring</summary>
+
+![Real-time](docs/screenshots/2_realtime.jpg)
+</details>
+
 > **All equipment and data are simulated.** No hardware is needed. Thresholds, health bands and RUL are
 > demonstration values, not certified industrial limits, and results on synthetic data do **not** establish
 > industrial diagnostic accuracy. The simulated emergency stop is **not** a safety function.

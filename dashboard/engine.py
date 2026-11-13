@@ -41,7 +41,7 @@ MAX_CATCH_UP_S = 1800.0        # cap per tick (e.g. after the browser tab slept)
 
 class SimulationEngine:
     def __init__(self, db_path: str | None = None, config: AppConfig | None = None, seed: int = 42,
-                 speedup: float = 10.0, warm_start: bool = True, start_time=None):
+                 speedup: float = 10.0, warm_start: bool = True, start_time=None, ml_detector=None):
         self.cfg = config or get_config()
         self.db = DatabaseManager(db_path or self.cfg.database_path)
         last = self.db.get_measurements(limit=1, latest_first=True, columns=["time_s"])
@@ -57,7 +57,7 @@ class SimulationEngine:
         self.collector.sinks.append(self.db.as_sink())
         self.rules = RuleBasedDiagnoser(self.cfg)
         self.health = HealthMonitor(self.cfg)
-        self.ml = MLDetector() if MLDetector.available() else None
+        self.ml = ml_detector if ml_detector is not None else (MLDetector() if MLDetector.available() else None)
         self.alarms = AlarmManager(self.db, self.cfg)
         self.speedup = speedup
         self.paused = False

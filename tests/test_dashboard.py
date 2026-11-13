@@ -59,6 +59,7 @@ def test_main_app_runs_and_sidebar_controls_work(isolated_db):
 
 
 def test_overview_shows_diagnosis_and_alarms(isolated_db):
+    isolated_db.advance(180)        # ensure complete RUNNING windows after the E-stop test restarted the pump
     at = page_app("overview")
     at.session_state["live"] = False
     at.run()
@@ -89,3 +90,22 @@ def test_html_report_contains_all_sections(isolated_db):
                     "Maintenance", "SIMULATED"):
         assert section in rep
     assert "imbalance" in rep and rep.strip().endswith("</html>")
+
+
+def test_demo_mode_gives_each_session_a_private_engine(monkeypatch):
+    """Public-demo mode: separate in-memory simulation per visitor, prefilled history."""
+    monkeypatch.setenv("PUMP_DEMO_MODE", "1")
+    app_path = str(Path(__file__).resolve().parents[1] / "app.py")
+    a = AppTest.from_file(app_path, default_timeout=90)
+    b = AppTest.from_file(app_path, default_timeout=90)
+    for at in (a, b):
+        at.session_state["live"] = False
+        at.run()
+        assert not at.exception, [e.message for e in at.exception]
+    ea, eb = a.session_state["engine"], b.session_state["engine"]
+    assert ea is not eb and ea.db.path == ":memory:"
+    assert ea.db.counts()["measurements"] >= 600 and ea.latest_health is not None
+    ea.emergency_stop()
+    ea.advance(10)
+    assert ea.state == "Emergency stop" and eb.state == "Running"     # isolation between visitors
+    assert any("Public demo" in e.label for e in a.sidebar.expander)

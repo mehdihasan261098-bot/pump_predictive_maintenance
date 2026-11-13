@@ -5,7 +5,7 @@ __pycache__/
 data/*.db
 data/raw/*.csv
 data/processed/*.csv
-models/saved_models/*.joblib
+# trained models ARE committed (needed by the hosted demo; ~6 MB, rebuild: python build_artifacts.py)
 reports/*.csv
 reports/*.html
 data/*.db-wal

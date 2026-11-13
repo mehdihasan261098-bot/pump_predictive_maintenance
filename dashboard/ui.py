@@ -37,11 +37,45 @@ CSS = """
 """
 
 
+def demo_mode() -> bool:
+    """Public demo (e.g. Streamlit Community Cloud): set PUMP_DEMO_MODE = "1" as an
+    environment variable or in the app's secrets."""
+    if os.environ.get("PUMP_DEMO_MODE", "").strip() in ("1", "true", "True"):
+        return True
+    try:
+        return str(st.secrets.get("PUMP_DEMO_MODE", "")).strip() in ("1", "true", "True")
+    except Exception:            # no secrets file
+        return False
+
+
 @st.cache_resource
-def get_engine() -> SimulationEngine:
-    """One engine per server process (shared like a real SCADA server).
+def _shared_ml():
+    """ML models loaded once per server and shared by all sessions (read-only)."""
+    from detection.ml_detection import MLDetector
+    return MLDetector() if MLDetector.available() else None
+
+
+@st.cache_resource
+def _shared_engine() -> SimulationEngine:
+    """Normal mode: one engine per server process (shared like a real SCADA server).
     PUMP_DB_PATH overrides the database file (used by tests)."""
     return SimulationEngine(db_path=os.environ.get("PUMP_DB_PATH"))
+
+
+def get_engine() -> SimulationEngine:
+    """Demo mode: every visitor gets a PRIVATE simulation with an in-memory
+    database (one visitor's E-stop or fault never affects another), pre-filled
+    with 10 minutes of healthy history."""
+    if not demo_mode():
+        return _shared_engine()
+    if "engine" not in st.session_state:
+        eng = SimulationEngine(db_path=":memory:", ml_detector=_shared_ml())
+        eng.advance(600)
+        st.session_state["engine"] = eng
+    return st.session_state["engine"]
+
+
+get_engine.clear = _shared_engine.clear      # used by tests
 
 
 def setup_page():

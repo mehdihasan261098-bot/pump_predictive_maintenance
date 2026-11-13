@@ -11,16 +11,30 @@ import streamlit as st
 st.set_page_config(page_title="Pump PdM SCADA", page_icon="⚙️", layout="wide")
 
 from dashboard import fault_analysis, historical_data, maintenance, overview, realtime, vibration  # noqa: E402
-from dashboard.ui import STATE_COLORS, get_engine, pill, setup_page  # noqa: E402
+from dashboard.ui import STATE_COLORS, demo_mode, get_engine, pill, setup_page  # noqa: E402
 from simulation.fault_simulator import FAULT_TYPES  # noqa: E402
 
-engine = get_engine()
+if demo_mode() and "engine" not in st.session_state:
+    with st.spinner("Starting your private pump simulation…"):
+        engine = get_engine()
+else:
+    engine = get_engine()
 setup_page()
 
 
 def sidebar():
     sb = st.sidebar
     sb.markdown("### ⚙️ P-101 Centrifugal Pump")
+    if demo_mode():
+        with sb.expander("👋 Public demo — what to try", expanded=True):
+            st.markdown(
+                "This is **your own private simulation** of an industrial pump (nothing you do affects other "
+                "visitors; data resets when you close the tab).\n\n"
+                "1. Open **Fault injection** below → choose e.g. *Misalignment* → **Apply**.\n"
+                "2. In **Simulation**, click **+5 min**.\n"
+                "3. Explore **Fault Detection**, **Vibration Analysis** and **Predictive Maintenance**.\n\n"
+                "All data is simulated. [Source code on GitHub]"
+                "(https://github.com/mehdihasan261098-bot/pump_predictive_maintenance)")
     sb.markdown(f"{pill(engine.state, STATE_COLORS.get(engine.state))} &nbsp; "
                 f"<small>sim time {engine.now:%Y-%m-%d %H:%M:%S}</small>", unsafe_allow_html=True)
 
