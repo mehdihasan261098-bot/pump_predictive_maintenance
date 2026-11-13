@@ -6,6 +6,10 @@ engineering and vibration analysis, diagnoses faults with expert rules **and** m
 explainable health index with a simulated remaining-useful-life (RUL) estimate, manages alarms, stores
 everything in SQLite and presents it in a six-page SCADA-style dashboard.
 
+[![Open the live demo](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://pumppredictivemaintenance-mehdi.streamlit.app/)
+
+**▶ Live demo: [https://pumppredictivemaintenance-mehdi.streamlit.app/](https://pumppredictivemaintenance-mehdi.streamlit.app/)** — runs in your browser, nothing to install. Each visitor gets a private simulation: inject a fault from the sidebar and watch diagnosis, vibration spectrum and health index react. (Free hosting: if the app was idle, click *“wake up”* and wait about a minute.)
+
 ### Screenshots (misalignment fault injected)
 
 | Equipment overview | Fault detection: rules vs ML |

@@ -233,5 +233,10 @@ Multi-pump monitoring · pump comparison · energy optimisation · maintenance s
 4. Multi-pump monitoring / comparison; energy optimisation; e-mail notifications; digital-twin view.
 5. Advanced ML (gradient boosting, sequence models, uncertainty-aware RUL).
 
+## Public deployment
+- Live demo (Streamlit Community Cloud, deployed by the user from `main`, Python 3.12, secret `PUMP_DEMO_MODE = "1"`): https://pumppredictivemaintenance-mehdi.streamlit.app/
+- Verified 2026-11-14: app loads, demo-mode guide shown, ML models load (RF/IF results on Fault Detection page). Redeploys automatically on every push to `main`.
+- Demo mode (`dashboard/ui.py`): private in-memory engine per visitor, 10 min prefilled history; models committed.
+
 ## How to resume in a new conversation
 Read this file first. Environment: `.venv\Scripts\python.exe` (pinned pyarrow 21.0.0, scikit-learn 1.7.2). Regenerate artifacts: `python build_artifacts.py`. Run app: `streamlit run app.py` (from the project folder). Tests: `python -m pytest tests/ -q`.

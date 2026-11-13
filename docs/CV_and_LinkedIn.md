@@ -5,7 +5,8 @@ All numbers below come from this repository's own tests and reports (simulated d
 
 ## 1. CV entry (concise)
 
-**Centrifugal Pump Condition Monitoring & AI-Based Predictive Maintenance System** — *Python, personal project, 2026*
+**Centrifugal Pump Condition Monitoring & AI-Based Predictive Maintenance System** — *Python, personal project, 2026*  
+Live demo: https://pumppredictivemaintenance-mehdi.streamlit.app/ · Code: https://github.com/mehdihasan261098-bot/pump_predictive_maintenance
 
 - Built a physics-based digital model of a 7.5 kW centrifugal pump (pump/system curves, affinity laws, NPSH,
   motor current, thermal response) with 10 virtual sensors and 7 simulated faults (bearing, imbalance,
@@ -48,6 +49,9 @@ remaining useful life, maintenance work orders and downloadable reports — Stre
 One lesson I enjoyed: deliberately throttling a valve and a blocked pipe look identical if you only watch
 flow. Comparing the measured system resistance with the value expected for the valve position separates
 them — a small piece of engineering that removed all false alarms at part load.
+
+▶ Try the live demo (inject a fault yourself): https://pumppredictivemaintenance-mehdi.streamlit.app/
+💻 Code: https://github.com/mehdihasan261098-bot/pump_predictive_maintenance
 
 *All results are from simulated data; real deployment would need field data and machine-specific baselines.*
 
