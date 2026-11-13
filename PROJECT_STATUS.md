@@ -211,6 +211,7 @@ Multi-pump monitoring · pump comparison · energy optimisation · maintenance s
 - **Metrics after retraining (fresh validation set, sev ≥ 0.3):** rules FP 0 %, detection 96.5 %, top-1 98.0 %; RF accuracy 96.8 %, macro-F1 0.958, FP 0.6 %; IF ROC-AUC 0.88, FP 1.1 %.
 - **Performance (4.4):** engine 1 h simulated in 4.1 s (≈ 870× real time); live tick (20 sim-s) median 7 ms / max 75 ms; DB read 1 h 34 ms; server-side page reruns 45–246 ms, 0 exceptions.
 - **GitHub prep (4.7):** `.gitignore` extended (WAL/SHM, secrets); `git init` + initial commit (local only, not pushed). Data, models, DB git-ignored → `python build_artifacts.py` regenerates them.
+- **Handover (4.9):** fresh `git clone` (no data/models) → `pytest` **220 passed, 1 skipped** (production-model test skips until `build_artifacts.py` runs; dashboard works without models). Backups (outside repo): `D:\Pump_project\backups\pump_pdm_2026-11-13.bundle` (full repo incl. history, `git bundle verify` OK; restore with `git clone <bundle> pump_pdm`) and `pump_pdm_source_2026-11-13.zip` (source snapshot).
 - **Commands:** `python -m analysis.scenario_validation`, `python build_artifacts.py`, perf scripts, `python -m pytest tests/ -q -W error::DeprecationWarning -W error::RuntimeWarning` → **221 passed**, Mermaid validation → valid.
 
 ## Known issues / resolutions
