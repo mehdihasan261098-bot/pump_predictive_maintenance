@@ -1,0 +1,14 @@
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+data/*.db
+data/raw/*.csv
+data/processed/*.csv
+models/saved_models/*.joblib
+reports/*.csv
+reports/*.html
+data/*.db-wal
+data/*.db-shm
+*.egg-info/
+.streamlit/secrets.toml

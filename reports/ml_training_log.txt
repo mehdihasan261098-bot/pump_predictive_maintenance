@@ -1,0 +1,72 @@
+Split: {'train_runs': 32, 'test_runs': 19, 'train_windows': 1280, 'test_windows': 760, 'validation_runs': 27, 'validation_windows': 1080}
+
+===== TEST =====
+Isolation Forest: {'false_positive_rate': 0.018, 'detection_rate': 0.524, 'roc_auc': 0.891}
+ detection by severity band:
+              mean  size
+band                   
+[0.0, 0.1)  0.205    39
+[0.1, 0.3)  0.340   100
+[0.3, 0.6)  0.454   141
+[0.6, 1.0)  0.720   207
+Random Forest sev>=0.0: {'windows': 760, 'single_fault_run_accuracy': 0.889, 'multi_fault_any_active_match': 0.919, 'accuracy': 0.87, 'precision_macro': 0.934, 'recall_macro': 0.823, 'f1_macro': 0.863, 'false_positive_rate': 0.0, 'detection_rate': 0.838}
+Rule-based    sev>=0.0: {'windows': 760, 'false_positive_rate': 0.0, 'false_negative_rate': 0.224, 'detection_rate': 0.776, 'top1_accuracy': 0.857}
+Random Forest sev>=0.3: {'windows': 621, 'single_fault_run_accuracy': 0.988, 'multi_fault_any_active_match': 1.0, 'accuracy': 0.958, 'precision_macro': 0.951, 'recall_macro': 0.945, 'f1_macro': 0.939, 'false_positive_rate': 0.0, 'detection_rate': 0.983}
+Rule-based    sev>=0.3: {'windows': 621, 'false_positive_rate': 0.0, 'false_negative_rate': 0.037, 'detection_rate': 0.963, 'top1_accuracy': 0.979}
+
+===== VALIDATION =====
+Isolation Forest: {'false_positive_rate': 0.011, 'detection_rate': 0.536, 'roc_auc': 0.882}
+ detection by severity band:
+              mean  size
+band                   
+[0.0, 0.1)  0.250    56
+[0.1, 0.3)  0.366   145
+[0.3, 0.6)  0.597   211
+[0.6, 1.0)  0.627   306
+Random Forest sev>=0.0: {'windows': 1080, 'single_fault_run_accuracy': 0.897, 'multi_fault_any_active_match': 0.929, 'accuracy': 0.883, 'precision_macro': 0.941, 'recall_macro': 0.845, 'f1_macro': 0.881, 'false_positive_rate': 0.006, 'detection_rate': 0.857}
+Rule-based    sev>=0.0: {'windows': 1080, 'false_positive_rate': 0.0, 'false_negative_rate': 0.217, 'detection_rate': 0.783, 'top1_accuracy': 0.856}
+Random Forest sev>=0.3: {'windows': 879, 'single_fault_run_accuracy': 0.99, 'multi_fault_any_active_match': 1.0, 'accuracy': 0.968, 'precision_macro': 0.965, 'recall_macro': 0.959, 'f1_macro': 0.958, 'false_positive_rate': 0.006, 'detection_rate': 0.988}
+Rule-based    sev>=0.3: {'windows': 879, 'false_positive_rate': 0.0, 'false_negative_rate': 0.035, 'detection_rate': 0.965, 'top1_accuracy': 0.98}
+
+Per-class (validation, sev>=0.3):
+                     precision  recall  f1-score  support
+bearing_degradation      1.000   1.000     1.000   92.000
+cavitation               0.767   1.000     0.868   66.000
+flow_restriction         0.969   1.000     0.984   62.000
+healthy                  0.984   0.994     0.989  362.000
+imbalance                1.000   0.798     0.888   99.000
+misalignment             1.000   1.000     1.000   56.000
+overheating              1.000   0.882     0.938   51.000
+seal_leakage             1.000   1.000     1.000   91.000
+accuracy                 0.968   0.968     0.968    0.968
+macro avg                0.965   0.959     0.958  879.000
+weighted avg             0.974   0.968     0.968  879.000
+
+Confusion (test, all severities):
+                     bearing_degradation  cavitation  flow_restriction  healthy  imbalance  misalignment  overheating  seal_leakage
+bearing_degradation                   84           0                 0        7          0             0            0             0
+cavitation                             0          46                 0        8          0             0            0             0
+flow_restriction                       0           0                52        5          0             0            0             0
+healthy                                0           0                 0      273          0             0            0             0
+imbalance                              0          20                 0       11         61             0            0             0
+misalignment                           0           0                 0       11          0            44            0             0
+overheating                            0           0                 0       20          0             0           36             0
+seal_leakage                           0           0                 0       17          0             0            0            65
+
+Top features:
+                       feature  impurity  permutation
+0    bearing_temp_slope_c_min    0.0514       0.0496
+1     head_deviation_pct_mean    0.0577       0.0487
+2       flow_deficit_m3h_mean    0.0532       0.0472
+3          vib_env_bpfo_ratio    0.0397       0.0392
+4             vib_ratio_2x_1x    0.0687       0.0375
+5            vib_acc_kurtosis    0.0256       0.0359
+6         vib_acc_hf_band_rms    0.0228       0.0309
+7        vib_acc_crest_factor    0.0219       0.0301
+8   vibration_accel_m_s2_mean    0.0250       0.0301
+9                 vib_acc_rms    0.0153       0.0187
+10            vib_amp_2x_mm_s    0.0509       0.0114
+11            vib_amp_1x_mm_s    0.0355       0.0081
+12  suction_pressure_bar_mean    0.0753       0.0045
+13    casing_temp_slope_c_min    0.0062       0.0024
+14         bearing_temp_c_std    0.0094       0.0020
