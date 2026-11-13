@@ -101,8 +101,7 @@ python -m pip install -r requirements.txt
 python build_artifacts.py         # datasets + ML models + reports, ~2-4 min
 ```
 
-`pyarrow` and `scikit-learn` are pinned (21.0.0 / 1.7.2) because newer builds' DLLs were blocked by Windows
-Application Control on the development machine; the pinned versions work everywhere.
+`pyarrow` and `scikit-learn` are pinned (21.0.0 / 1.7.2) because this pinned versions work everywhere (Others may show some complexities).
 
 ## Run the dashboard
 
